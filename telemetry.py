@@ -5,8 +5,14 @@ import configparser
 import platform
 import os.path
 import subprocess
+import sys
 
 def main():
+
+    if not os.path.isfile('/etc/telemetry/telemetry.ini'):
+        print("Config file /etc/telemetry/telemetry.ini not found")
+        sys.exit(-1)
+
     config = configparser.ConfigParser()
     config.read('/etc/telemetry/telemetry.ini')
     broker = config['default']['broker'];
