@@ -15,8 +15,7 @@ def main():
     with open('/sys/class/thermal/thermal_zone0/temp') as f:
         temperature = int(f.read())/1000
         topic = config['default']['rootTopic']+"/temperature"
-        topic.replace('{HOSTNAME}',platform.node())
-        mqtt.publish(topic,temperature)
+        mqtt.publish(topic.replace('{HOSTNAME}',platform.node()),temperature)
 
 if __name__ == "__main__":
     main()
