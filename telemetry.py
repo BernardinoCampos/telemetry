@@ -25,11 +25,13 @@ def main():
     mqtt.connect(config['default']['broker'],int(config['default']['port']))
 
     if os.path.isfile('/sys/class/thermal/thermal_zone1/temp'):
+        print("Opcao 1")
         with open('/sys/class/thermal/thermal_zone1/temp') as f:
             temperature = int(f.read())/1000
             topic = config['default']['rootTopic']+"/temperature"
             mqtt.publish(topic.replace('{HOSTNAME}',platform.node()),temperature)
     elif os.path.isfile('/sys/class/thermal/thermal_zone0/temp'):
+        print("Opcao 2")
         with open('/sys/class/thermal/thermal_zone0/temp') as f:
             temperature = int(f.read())/1000
             topic = config['default']['rootTopic']+"/temperature"
