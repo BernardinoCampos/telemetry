@@ -10,7 +10,7 @@ def main():
     mqtt = paho.Client("telemetry")
 
     mqtt.username_pw_set(username=config['default']['user'], password=config['default']['passwd'])
-    mqtt.connect(config['default']['broker'],config['default']['port'])
+    mqtt.connect(config['default']['broker'],int(config['default']['port']))
 
     with open('/sys/class/thermal/thermal_zone0/temp') as f:
         temperature = int(f.read())/1000
