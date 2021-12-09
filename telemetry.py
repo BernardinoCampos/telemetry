@@ -9,8 +9,6 @@ import sys
 
 def main():
 
-    print (platform.system())
-
     if not os.path.isfile('/etc/telemetry/telemetry.ini'):
         print("Config file /etc/telemetry/telemetry.ini not found")
         sys.exit(-1)
@@ -36,6 +34,9 @@ def main():
             temperature = int(f.read())/1000
             topic = config['default']['rootTopic']+"/temperature"
             mqtt.publish(topic.replace('{HOSTNAME}',platform.node()),temperature)
+    elif platform.system()=='FreeBSD':
+        result = subprocess.run(['sysctl','-a','|','grep','temperature','|','grep','"dev.cpu."','|','sort','-k2','-r','|','head','-1','|','cut','-d','" "','-f2'], stdout=subprocess.PIPE)
+        print(result.stdout)
     else:
         print("Não foi encontrada forma de pegar a temperatura")
 
