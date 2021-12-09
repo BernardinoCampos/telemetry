@@ -35,8 +35,13 @@ def main():
             topic = config['default']['rootTopic']+"/temperature"
             mqtt.publish(topic.replace('{HOSTNAME}',platform.node()),temperature)
     elif platform.system()=='FreeBSD':
-        result = subprocess.run(['sysctl','-a','|','grep','temperature','|','grep','"dev.cpu."','|','sort','-k2','-r','|','head','-1','|','cut','-d','" "','-f2'], stdout=subprocess.PIPE)
-        print(result.stdout)
+        p1 = subprocess.run(['sysctl','-a'], stdout=subprocess.PIPE)
+        p2 = subprocess.run(['grep','temperature'], stdin=p1.stdout, stdout=subprocess.PIPE)
+        p3 = subprocess.run(['grep','"dev.cpu."'], stdin=p2.stdout, stdout=subprocess.PIPE)
+        p4 = subprocess.run(['sort','-k2','-r'], stdin=p3.stdout, stdout=subprocess.PIPE)
+        p5 = subprocess.run(['head','-1'], stdin=p4.stdout, stdout=subprocess.PIPE)
+        p6 = subprocess.run(['cut','-d','" "','-f2'], stdin=p5.stdout, stdout=subprocess.PIPE)
+        print(p6.stdout)
     else:
         print("Não foi encontrada forma de pegar a temperatura")
 
