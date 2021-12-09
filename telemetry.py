@@ -9,6 +9,8 @@ import sys
 
 def main():
 
+    print (platform.system())
+
     if not os.path.isfile('/etc/telemetry/telemetry.ini'):
         print("Config file /etc/telemetry/telemetry.ini not found")
         sys.exit(-1)
