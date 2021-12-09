@@ -34,6 +34,8 @@ def main():
             temperature = int(f.read())/1000
             topic = config['default']['rootTopic']+"/temperature"
             mqtt.publish(topic.replace('{HOSTNAME}',platform.node()),temperature)
+    else:
+        print("Não foi encontrada forma de pegar a temperatura")
 
 if __name__ == "__main__":
     main()
