@@ -7,6 +7,7 @@ import os.path
 import subprocess
 import sys
 import re
+from datetime import datetime
 
 def main():
 
@@ -44,7 +45,7 @@ def main():
         print("Não foi encontrada forma de pegar a temperatura")
 
 
-    mqtt.publish(topicLastSeen.replace('{HOSTNAME}', platform.node()), Date.now())
+    mqtt.publish(topicLastSeen.replace('{HOSTNAME}', platform.node()), datetime.today().strftime('%Y-%m-%d %H:%M:%S'))
 
 if __name__ == "__main__":
     main()
