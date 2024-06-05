@@ -39,7 +39,7 @@ def main():
             mqtt.publish(topicTemp.replace('{HOSTNAME}',platform.node()),temperature)
     elif platform.system()=='FreeBSD':
         command = subprocess.check_output("sysctl -a | grep temperature | grep 'dev.cpu.' | sort -k2 -r | head -1 | cut -d' ' -f 2",shell=True)
-        m = re.match('[\.0-9]+', command.decode())
+        m = re.match('[.0-9]+', command.decode())
         mqtt.publish(topicTemp.replace('{HOSTNAME}', platform.node()), float(m.group(0)))
     else:
         print("Não foi encontrada forma de pegar a temperatura")
