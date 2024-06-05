@@ -45,7 +45,7 @@ def main():
         print("Não foi encontrada forma de pegar a temperatura")
 
 
-    mqtt.publish(topicLastSeen.replace('{HOSTNAME}', platform.node()), datetime.today().strftime('%Y-%m-%d %H:%M:%S'))
+    mqtt.publish(topicLastSeen.replace('{HOSTNAME}', platform.node()), datetime.now(tz=datetime.timezone.utc).isoformat())
 
 if __name__ == "__main__":
     main()
